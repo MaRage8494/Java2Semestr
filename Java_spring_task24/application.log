@@ -1,0 +1,12 @@
+366  [main] INFO  c.e.J.services.PostService
+                – Post save Post{id=0, text='null', creationDate='dayTest'}
+436  [main] INFO  c.e.J.services.PostService
+                – Post find all
+438  [main] INFO  c.e.J.services.PostService
+                – Post find all
+302  [main] INFO  c.e.J.services.UserService
+                – Save user User(id=0, firstName=Test 1, lastName=null, middleName=null, birthDate=null, postsList=null)
+370  [main] INFO  c.e.J.services.UserService
+                – Find all users
+372  [main] INFO  c.e.J.services.UserService
+                – Find all users

@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+mainClassName = 'Main'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-configuration-processor:2.6.3'
+    implementation 'org.apache.groovy:groovy:4.0.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+}
+task task1 {
+    task1.dependsOn jar
+    copy {
+        from jar
+        into 'DockerfilePlace'
+    }
+    finalizedBy {
+        Docker
+    }
+}
+
+
+task buildDocker(type: Exec) {
+    workingDir 'DockerfilePlace'
+    finalizedBy 'runDocker'
+    commandLine 'docker', 'build', '-t', 'prakt9', '.'
+}
+
+task runDocker(type: Exec){
+    workingDir 'DockerfilePlace'
+    finalizedBy 'removeContainer'
+    commandLine 'docker', 'run', '--name', 'prakt9', 'prakt9'
+}
+task removeContainer(type:Exec) {
+    finalizedBy 'removeImage'
+    commandLine 'docker', 'container', 'rm', 'prakt9'
+}
+task removeImage(type: Exec) {
+    commandLine 'docker', 'image', 'rm', 'prakt9'
+}
